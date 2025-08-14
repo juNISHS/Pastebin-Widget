@@ -1,17 +1,17 @@
+import { useEffect, useState } from "react";
+import products from "./data/products.json";
+
 export default function CatalogVisualMockupGrid() {
-  const products = [
-    { name: "NailFrida", price: 299, img: "/images/catalog/nailfrida.jpg" },
-    { name: "BreatheFrida Vapor Bath Bomb", price: 295, img: "/images/catalog/breathefrida.jpg" },
-    { name: "Sleep Vapor Bath Bombs", price: 295, img: "/images/catalog/sleepvapor.jpg" },
-    { name: "Baby Basics Kit", price: 1195, img: "/images/catalog/babybasics.jpg" },
-    { name: "Gas + Colic Heating Pad", price: 750, img: "/images/catalog/gascolic.jpg" },
-    { name: "Baby Grooming Kit", price: 1095, img: "/images/catalog/babygrooming.jpg" },
-    { name: "Windi the Gaspasser", price: 395, img: "/images/catalog/windi.jpg" },
-    { name: "Push Pop Feeder", price: 295, img: "/images/catalog/pushpop.jpg" },
-    { name: "SmileFrida Finger Toothbrush", price: 195, img: "/images/catalog/smilefrida.jpg" },
-    { name: "NailFrida S-Curved Nail Files", price: 395, img: "/images/catalog/nailfridafile.jpg" },
-    { name: "Not-Too-Cold-To-Hold Teether", price: 295, img: "/images/catalog/teether.jpg" },
-  ];
+  const [productList, setProductList] = useState(products || []);
+
+  useEffect(() => {
+    if (!products || products.length === 0) {
+      fetch("/data/products.json")
+        .then((res) => res.json())
+        .then((data) => setProductList(data))
+        .catch((err) => console.error("Failed to load products", err));
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-sky-50 p-6">
@@ -25,7 +25,7 @@ export default function CatalogVisualMockupGrid() {
       </header>
 
       <main className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-        {products.map((product, idx) => (
+        {productList.map((product, idx) => (
           <div
             key={idx}
             className="rounded-xl overflow-hidden border border-zinc-200 bg-white shadow-sm hover:shadow-lg transition"
