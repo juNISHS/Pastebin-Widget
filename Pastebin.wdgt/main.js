@@ -25,7 +25,7 @@ $(document).ready(function() {
       $("#loading_notice").fadeIn(200);
       
       if ($("#paste_username").val() != "" && $("#paste_password").val() != "") {
-        $.post("http://pastebin.com/api/api_login.php", {
+        $.post("https://pastebin.com/api/api_login.php", {
           api_dev_key: api_key,
           api_user_name: $("#paste_username").val(),
           api_user_password: $("#paste_password").val()
@@ -51,7 +51,7 @@ $(document).ready(function() {
 });
 
 function post_paste(userkey) {
-$.post("http://pastebin.com/api/api_post.php",
+$.post("https://pastebin.com/api/api_post.php",
 {
  api_dev_key: api_key,
  api_option: 'paste',

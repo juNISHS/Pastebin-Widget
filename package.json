@@ -1,0 +1,8 @@
+{
+  "name": "pastebin-widget",
+  "version": "1.0.0",
+  "description": "Pastebin dashboard widget",
+  "scripts": {
+    "test": "echo 'No tests configured'"
+  }
+}
