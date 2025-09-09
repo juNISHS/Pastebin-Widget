@@ -51,30 +51,35 @@ $(document).ready(function() {
 });
 
 function post_paste(userkey) {
-$.post("https://pastebin.com/api/api_post.php",
-{
- api_dev_key: api_key,
- api_option: 'paste',
- api_paste_code: $("#paste_text").val(),
- api_paste_name: $("#paste_name").val(),
- api_paste_private: $("#paste_private").val(),
- api_paste_expire_date: $("#paste_expire_date").val(),
- api_paste_format: $("#paste_format").val(),
- api_user_key: userkey,
-},
-function(data) {
- if(data.substr(0, 4) == "http") {
-   $("#url_link").text(data).attr("href", "javascript:widget.openURL('" + data + "');");
-   $("#url").fadeIn(200);
-   
-   $("#paste_text").val('');
-   $("#paste_name").val('');
- } else {
-   $("#error_notice").text("An unexpected error occurred.").fadeIn(200, function() {
-     $(this).fadeOut(5000);
-   });
- }
- $("#loading_notice").fadeOut(200);
-}
-);
+  var post_data = {
+    api_dev_key: api_key,
+    api_option: 'paste',
+    api_paste_code: $("#paste_text").val(),
+    api_paste_name: $("#paste_name").val(),
+    api_paste_private: $("#paste_private").val(),
+    api_paste_expire_date: $("#paste_expire_date").val(),
+    api_paste_format: $("#paste_format").val()
+  };
+
+  if (userkey != -1) {
+    post_data.api_user_key = userkey;
+  }
+
+  $.post("https://pastebin.com/api/api_post.php",
+    post_data,
+    function(data) {
+      if (data.substr(0, 4) == "http") {
+        $("#url_link").text(data).attr("href", "javascript:widget.openURL('" + data + "');");
+        $("#url").fadeIn(200);
+
+        $("#paste_text").val('');
+        $("#paste_name").val('');
+      } else {
+        $("#error_notice").text("An unexpected error occurred.").fadeIn(200, function() {
+          $(this).fadeOut(5000);
+        });
+      }
+      $("#loading_notice").fadeOut(200);
+    }
+  );
 }
